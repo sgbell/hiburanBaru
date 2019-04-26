@@ -1,0 +1,9 @@
+<ul class="library">
+    {% if entityClass=='directory' %}
+        {% include ":directory_tpl.html" %}
+    {% else %}
+        {% for entry in playlist %}
+            <li data-full-path="{% entry %}">{% entry %}</li>
+        {% endfor %}
+    {% endif %}
+</ul>

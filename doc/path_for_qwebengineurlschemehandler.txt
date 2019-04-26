@@ -1,0 +1,107 @@
+core/api/qwebengineurlschemehandler.h
+----------------------------
+
+QWebEngineUrlSchemeHandler (QObject *parent): QObject{
+    public:
+        requestStarted(QWebEngineUrlRequestJob *job);
+}
+
+namespace QtWebEngineCore{
+    class URLRequestContextGetterQt;
+}
+
+
+core/net/url_request_context_getter_qt.h
+----------------------------------------
+
+namespace QtWebEngineCore {
+    class URLRequestContextGetterQt : public net::URLRequestContextGetter {
+        public:
+           URLRequestContextGetterQt(ProfileIODataQt *data);
+           net::URLRequestContext *GetURLRequestContext();
+           base::SingleThreadTaskRunner GetNetworkTaskRunner()
+        private:
+           ProfileIODataQt *m_profileIOData;
+    }
+}
+
+-- Chrome Connection to class above
+3rdparty/chromium/net/url_request/url_request_context_getter.h
+--------------------------------------------------------------
+
+This is the object passed to the QWebEngineUrlSchemeHandler object for working with the request.
+
+core/api/qwebengineurlrequestjob.h
+----------------------------------
+namespace QtWebEngineCore {
+    class URLRequestCustomJobDelegate;
+    class URLRequestCustomJobProxy;
+}
+
+class QWEBENGINECORE_EXPORT QWebEngineUrlRequestJob : public QObject {
+   public:
+       QUrl requestUrl();
+       QByteArray requestMethod();
+       QUrl initiator();
+       void reply(QByteArray &contentType, QIODevice *device);
+       void fail(Error error);
+       void redirect(QUrl &url);
+   private:
+       QWebEngineUrlRequestJob(QtWebEngineCore::URLRequestCustomJobDelegate *);
+       friend class QtWebEngineCore::URLRequestCustomJobProxy;
+
+       QtWebEngineCore::URLRequestCustomJobDelegator* d_ptr;
+}
+
+core/net/url_request_custom_job_delegate.h
+------------------------------------------
+namespace QtWebEngineCore {
+   class URLRequestCustomJobDelegate : public QObject {
+       public:
+           QUrl url();
+           QByteArray method();
+           QUrl initiator();
+           void reply(QByteArray &contentType, QIODevice *device);
+           void redirect(QUrl &url);
+           void abort();
+           void fail(Error);
+       private Q_SLOTS:
+           void slotReadyRead();
+       private:
+           URLRequestCustomJobDelegate(URLRequestCustomJobProxy *proxy,
+                                       QUrl &url,
+                                       QByteArray &method,
+                                       QUrl &initiatorOrigin);
+           friend class URLRequestCustomJobProxy;
+           URLRequestCustomJobProxy m_proxy;
+           QUrl m_request;
+           QByteArray m_method;
+           QUrl m_initiatorOrigin;
+   }
+}
+
+core/net/url_request_custom_job_proxy.h
+---------------------------------------
+namespace QtWebEngineCore{
+    class URLRequestCustomJobProxy : public base::RefCounterThreadSafe<URLRequestCustomJobProxy> {
+        public:
+            URLRequestCustomJobProxy(URLRequestCustomJob *job,
+                                     std::string &scheme,
+                                     QPointer<ProfileAdaptor> profileAdaptor);
+            ~URLRequestCustomJobProxy();
+            void reply(std::string mineType, QIODevice *device);
+            void redirect(GURL url);
+            void abort();
+            void fail(int error);
+            void release();
+            void initialize(GURL url, std::string method, base::Optional<url::Origin> initiatorOrigin);
+            void readyRead();
+            URLRequestCustomJob *m_job;
+            bool m_started;
+
+            std::string m_scheme;
+            URLRequestCustomJobDelegate *m_delegate;
+            QPointer<ProfileAdaptor> m_profileAdaptor;
+    }
+}
+It will be worth checkout out what creates the above class to see where the method and url are obtained from

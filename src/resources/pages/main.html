@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+	<!--link rel="stylesheet" href="assets/bootstrap.min.css" />
+	<link rel="stylesheet" href="assets/interface.css" />
+	<script src="assets/jquery-3.4.0.min.js" ></script>
+	<script src="assets/bootstrap.min.js" ></script>
+	<script src="assets/popper.min.js" ></script>
+	<script src="assets/interface.js" ></script-->
+	<link rel="stylesheet" href="qrc:///assets/bootstrap.min.css" />
+	<link rel="stylesheet" href="qrc:///assets/interface.css" />
+	<link rel="stylesheet" href="hibu://assets/css/all.css" />
+	<script src="qrc:///assets/jquery-3.4.0.min.js" ></script>
+	<script src="qrc:///assets/bootstrap.min.js" ></script>
+	<script src="qrc:///assets/popper.min.js" ></script>
+	<script src="qrc:///assets/interface.js" ></script>
+    </head>
+    <body>
+        <div class="main row">
+            <div id="navigation" class="col-sm-4 no-padding row">
+		        <div class="col-sm-12 button" hb-action="//playlist/show" hb-target="div.main-window">
+			        <article>
+		                <div>Play List</div>
+			        </article>
+		        </div>
+		        <div class="col-sm-12 button" hb-action="//library/show" hb-target="div.main-window" >
+			        <article><div>Library</div></article>
+		        </div>
+		        <div class="col-sm-4 button" hb-action="//trackControl/previous" >
+				    <article><div>Previous</div></article>
+			    </div>
+		        <div class="col-sm-4 button" hb-action="//trackControl/pause" >
+				    <article><div>Pause</div></article>
+			    </div>
+		    	<div class="col-sm-4 button" hb-action="//trackControl/next" >
+					<article><div>Skip</div></article>
+				</div>
+		    	<div class="col-sm-12 button" hb-action="//trackControl/random" >
+					<article><div>Random</div></article>
+				</div>
+		    	<div class="col-sm-4 button" hb-action="//volume/up/5">
+					<article><div>Volume Up</div></article>
+				</div>
+		    	<div class="col-sm-4 button" hb-action="//volume/mute">
+					<article><div>Mute</div></article>
+				</div>
+			    <div class="col-sm-4 button" hb-action="//volume/down/5">
+					<article><div>Volume Down</div></article>
+				</div>
+			    <div class="col-sm-12 button" hb-action="//settings" hb-target="div.main-window">
+					<article><div>Settings</div></article>
+				</div>
+	        </div>
+            <div class="main-window col-sm-8 no-padding">
+	            <p>Body of information can go here</p>
+            </div>
+	    </div>
+    </body>
+</html>

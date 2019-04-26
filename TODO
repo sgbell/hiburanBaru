@@ -1,0 +1,15 @@
+1. Buttons to add on the screens:
+   Library -> Directory screen
+   ==========================
+      * Add to Playlist
+   Library -> Song
+   ==========================
+      * Add to Playlist
+   Playlist
+   ==========================
+      * Save Playlist
+
+2. New screen/window:
+   Add to Playlist
+   =================
+   List all Playlists in the system + <Create New Playlist> at the bottom of the list to create a new playlist (will require an onscreen keyboard)

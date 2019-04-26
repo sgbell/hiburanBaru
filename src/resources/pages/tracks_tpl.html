@@ -1,0 +1,5 @@
+<ul class="library">
+{% for entry in tracks %}
+    <li data-full-path="{% entry.nameUrl %}">{% entry.name %}{% if entry.album %}<i class="fa fa-2x fa-plus-square" hb-action="//queue/{% entry.albumArtistUrl %}/{% entry.albumUrl %}/{% entry.nameUrl %}"></i>{% endif %}<i class="fa fa-2x fa-play" hb-action="//play/{% entry.albumArtistUrl %}/{% if entry.albumUrl %}{% entry.albumUrl %}/{% endif %}{% entry.nameUrl %}"></i></li>
+{% endfor %}
+</ul>

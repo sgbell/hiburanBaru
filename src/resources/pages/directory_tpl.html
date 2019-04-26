@@ -1,0 +1,13 @@
+<ul class="library">
+{% for entry in directory %}
+    {% if entry.entityClass=="directory" %}
+<li>
+    <h2 hb-action="//library/show/files/{% entry.fullNameUrl %}" hb-target="div.main-window">{% entry.name %}</h2>
+    <i class="fa fa-2x fa-plus-square" hb-action="//queue/{% entry.fullNameUrl %}"></i>
+    <i class="fa fa-2x fa-play" hb-action="//play/{% entry.fullNameUrl %}"></i>
+</li>
+    {% else %}
+<li data-full-path="{% entry.fullNameUrl %}">{% entry.songName %}<i class="fa fa-2x fa-plus-square" hb-action="//queue/{% entry.fullNameUrl %}"></i><i class="fa fa-2x fa-play" hb-action="//play/{% entry.fullNameUrl %}"></i></li>
+    {% endif %}
+{% endfor %}
+</ul>

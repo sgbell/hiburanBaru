@@ -1,0 +1,9 @@
+<ul class="library">
+    {% for entry in artists %}
+        {% if entry.entityClass=="artist" %}
+            <li>
+                <h2 hb-action="//library/show/artist/{% entry.nameUrl %}" hb-target="div.main-window">{% entry.name %}</h2>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
